@@ -1,0 +1,21 @@
+[
+  {
+    "Name": "Hammer",
+    "Price": 19.99
+  },
+  {
+    "Name": "screwdriver",
+    "Price": 15.5
+
+  },
+  {
+    "Name": "Drill",
+    "Price": 43.65
+
+  },
+  {
+    "Name": "Folding rule",
+    "Price": 3
+
+  }
+]

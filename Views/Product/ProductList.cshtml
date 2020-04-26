@@ -1,0 +1,96 @@
+﻿@using MvcOrders.ViewModels;
+@using MvcOrders.Models;
+@model ProductListViewModel;
+@{
+    // Since Model isn't a string, it requires a cast.
+    ProductListViewModel ModelVD = ViewData["Model"] as ProductListViewModel;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+
+
+
+<div class="row checkoutForm">
+    <table class="table table-bordered table-striped">
+        <tbody>
+		 <tr>
+		 <td>
+            <div class="dropdown">
+
+  <!--Trigger-->
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="true">Material dropdown</button>
+
+  <!--Menu-->
+  <div class="dropdown-menu dropdown-primary">
+    @{
+    foreach(var p in Model.Products)
+    {
+       <a class="dropdown-item"
+         asp-controller="Product"
+         asp-action="selectProduct"
+         asp-route-Name="@p.Name">
+            @p.Name
+        </a>
+    }
+}
+</div>
+</td>
+<td class="text-center"><a class="btn btn-success" 
+                    asp-controller="Product" 
+                    asp-action="AddToShoppingCart" 
+                    asp-route-Name="@Model.selectedProduct.Name">
+                    add
+                    </a>
+                    
+</td>
+</tr>
+        </tbody>
+    </table>
+
+
+</div>
+<div class="row checkoutForm">
+    <h4>Here are the Products in your shopping cart.</h4>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Selected amount</th>
+                <th>Product</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var line in Model.Orderedproducts)
+            {
+                <tr>
+                    <td class="text-center">@Model.Amount</td>
+                    <td class="text-left">@line.Name</td>
+                    <td class="text-right">@line.Price.ToString("c")</td>
+                    <td class="text-right">
+                        @((@Model.Amount * line.Price).ToString("c"))
+                    </td>
+                    <td class="text-center"><a class="btn btn-danger btn-sm rounded-0" 
+                    asp-controller="Product" 
+                    asp-action="RemoveFromShoppingCart" 
+                    asp-route-Name="@line.Name"></a></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Total:</td>
+                <td class="text-right">
+                    @Model.ShoppingCartTotal.ToString("c")
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+ 
